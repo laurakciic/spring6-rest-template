@@ -4,5 +4,5 @@ import com.laurakovacic.spring6resttemplate.model.BeerDTO;
 import org.springframework.data.domain.Page;
 
 public interface BeerClient {
-    Page<BeerDTO> listBeers();
+    Page<BeerDTO> listBeers(String beerName);
 }
