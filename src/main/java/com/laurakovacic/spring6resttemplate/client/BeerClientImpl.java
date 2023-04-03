@@ -24,9 +24,8 @@ public class BeerClientImpl implements BeerClient {
         RestTemplate restTemplate = restTemplateBuilder.build();
 
         // ResponseEntity gives access to everything in the response
-        ResponseEntity<BeerDTOPageImpl> stringResponse = restTemplate.getForEntity(GET_BEER_PATH, BeerDTOPageImpl.class);
-        System.out.println(stringResponse.getBody());
+        ResponseEntity<BeerDTOPageImpl> response = restTemplate.getForEntity(GET_BEER_PATH, BeerDTOPageImpl.class);
 
-        return null;
+        return response.getBody();
     }
 }
