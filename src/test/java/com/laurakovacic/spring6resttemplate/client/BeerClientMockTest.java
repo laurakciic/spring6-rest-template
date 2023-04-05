@@ -141,6 +141,25 @@ public class BeerClientMockTest {
         assertThat(dtos.getContent().size()).isGreaterThan(0);
     }
 
+    @Test
+    void listBeersWithQueryParam() throws JsonProcessingException {
+        String response = objectMapper.writeValueAsString(getPage());
+
+        URI uri = UriComponentsBuilder.fromHttpUrl(URL + BeerClientImpl.GET_BEER_PATH)
+                .queryParam("beerName", "ALE")
+                .build().toUri();
+
+        server.expect(method(HttpMethod.GET))
+                .andExpect(requestTo(uri))
+                .andExpect(queryParam("beerName", "ALE"))
+                .andRespond(withSuccess(response, MediaType.APPLICATION_JSON));
+
+        Page<BeerDTO> responsePage = beerClient
+                .listBeers("ALE", null, null, null, null);
+
+        assertThat(responsePage.getContent().size()).isEqualTo(1);
+    }
+
     BeerDTO getBeerDto() {
         return BeerDTO.builder()
                 .id(UUID.randomUUID())
