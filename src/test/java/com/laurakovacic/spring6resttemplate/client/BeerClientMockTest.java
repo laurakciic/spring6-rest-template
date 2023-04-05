@@ -70,6 +70,7 @@ public class BeerClientMockTest {
         URI uri = UriComponentsBuilder.fromPath(BeerClientImpl.GET_BEER_BY_ID_PATH).build(dto.getId());
 
         server.expect(method(HttpMethod.POST))
+                .andExpect(header("Authorization", "Basic dXNlcjE6cGFzc3dvcmQ="))
                 .andExpect(requestTo(URL + BeerClientImpl.GET_BEER_PATH))
                 .andRespond(withAccepted().location(uri));
 
@@ -82,6 +83,7 @@ public class BeerClientMockTest {
     @Test
     void updateBeer() {
         server.expect(method(HttpMethod.PUT))
+                .andExpect(header("Authorization", "Basic dXNlcjE6cGFzc3dvcmQ="))
                 .andExpect(requestToUriTemplate(URL + BeerClientImpl.GET_BEER_BY_ID_PATH, dto.getId()))
                 .andRespond(withNoContent());
 
@@ -94,6 +96,7 @@ public class BeerClientMockTest {
     @Test
     void deleteBeer() {
         server.expect(method(HttpMethod.DELETE))
+                .andExpect(header("Authorization", "Basic dXNlcjE6cGFzc3dvcmQ="))
                 .andExpect(requestToUriTemplate(URL + BeerClientImpl.GET_BEER_BY_ID_PATH, dto.getId()))
                 .andRespond(withNoContent());
 
@@ -105,6 +108,7 @@ public class BeerClientMockTest {
     @Test
     void deleteNotFound() {
         server.expect(method(HttpMethod.DELETE))
+                .andExpect(header("Authorization", "Basic dXNlcjE6cGFzc3dvcmQ=")).andExpect(header("Authorization", "Basic dXNlcjE6cGFzc3dvcmQ="))
                 .andExpect(requestToUriTemplate(URL + BeerClientImpl.GET_BEER_BY_ID_PATH, dto.getId()))
                 .andRespond(withResourceNotFound());
 
@@ -125,6 +129,7 @@ public class BeerClientMockTest {
 
     private void mockGetOperation() {
         server.expect(method(HttpMethod.GET))   // server mock for a GET method
+                .andExpect(header("Authorization", "Basic dXNlcjE6cGFzc3dvcmQ="))
                 .andExpect(requestToUriTemplate(URL + BeerClientImpl.GET_BEER_BY_ID_PATH, dto.getId())) // binding method to path
                 .andRespond(withSuccess(dtoJson, MediaType.APPLICATION_JSON)); // expecting JSON response object
     }
@@ -134,6 +139,7 @@ public class BeerClientMockTest {
         String payload = objectMapper.writeValueAsString(getPage());
 
         server.expect(method(HttpMethod.GET))
+                .andExpect(header("Authorization", "Basic dXNlcjE6cGFzc3dvcmQ="))
                 .andExpect(requestTo(URL + BeerClientImpl.GET_BEER_PATH))
                 .andRespond(withSuccess(payload, MediaType.APPLICATION_JSON));
 
@@ -151,6 +157,7 @@ public class BeerClientMockTest {
 
         server.expect(method(HttpMethod.GET))
                 .andExpect(requestTo(uri))
+                .andExpect(header("Authorization", "Basic dXNlcjE6cGFzc3dvcmQ="))
                 .andExpect(queryParam("beerName", "ALE"))
                 .andRespond(withSuccess(response, MediaType.APPLICATION_JSON));
 
